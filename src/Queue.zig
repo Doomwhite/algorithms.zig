@@ -11,9 +11,7 @@ pub const Queue = struct {
     head: ?*QueueNode,
     tail: ?*QueueNode,
 
-    pub fn enqueue(self: *Queue, allocator: Allocator, item: usize) !void {
-        var node = try allocator.create(QueueNode);
-        node.* = QueueNode{ .value = item, .next = null };
+    pub fn enqueue(self: *Queue, node: *QueueNode) !void {
         self.length += 1;
         if (self.tail == null) {
             self.head = node;
@@ -52,13 +50,22 @@ test "Queue" {
         .tail = null,
         .head = null,
     };
-    try queue.enqueue(allocator, 10);
+
+    var node = try allocator.create(QueueNode);
+    defer allocator.destroy(node);
+    node.* = QueueNode{ .value = 10, .next = null };
+    try queue.enqueue(node);
     try std.testing.expectEqual(@as(usize, 1), queue.length);
-    try queue.enqueue(allocator, 10);
+
+    var node_2 = try allocator.create(QueueNode);
+    node_2.* = QueueNode{ .value = 10, .next = null };
+    defer allocator.destroy(node_2);
+    try queue.enqueue(node);
     try std.testing.expectEqual(@as(usize, 2), queue.length);
+
     _ = queue.deque();
     try std.testing.expectEqual(@as(usize, 1), queue.length);
-    std.debug.print("queue: {any}\n", .{queue});
-    // var value = queue.peek();
-    // try std.testing.expectEqual(@as(usize, 10), value orelse 0);
+
+    var value = queue.peek();
+    try std.testing.expectEqual(@as(usize, 10), value orelse 0);
 }
