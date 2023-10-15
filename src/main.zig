@@ -1,7 +1,11 @@
 const std = @import("std");
 const bubbleSort = @import("BubbleSort.zig");
+const TwoCrystalProblem = @import("TwoCrystalProblem.zig");
 
-pub fn main() !void {}
+pub fn main() !void {
+    var arr = [_]bool{ false, false, false, false, false, false, false, true, true, true, true };
+    std.debug.print("TwoCrystalProblem.TwoCrystalProblem(&arr): {any}\n", .{TwoCrystalProblem.TwoCrystalProblem(&arr)});
+}
 
 test "simple test" {
     var list = std.ArrayList(i32).init(std.testing.allocator);
