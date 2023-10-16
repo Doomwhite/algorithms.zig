@@ -84,11 +84,18 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const stack_tests = b.addTest(.{
+        .root_source_file = .{ .path = "src/Stack.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
+
     var run_unit_tests = b.addRunArtifact(unit_tests);
     run_unit_tests = b.addRunArtifact(bubble_sort_tests);
     run_unit_tests = b.addRunArtifact(linked_list_tests);
     run_unit_tests = b.addRunArtifact(queue_tests);
     run_unit_tests = b.addRunArtifact(two_crystal_problem_tests);
+    run_unit_tests = b.addRunArtifact(stack_tests);
 
     // Similar to creating the run step earlier, this exposes a `test` step to
     // the `zig build --help` menu, providing a way for the user to request
