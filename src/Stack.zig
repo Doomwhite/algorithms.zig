@@ -8,20 +8,20 @@ pub fn Stack(comptime T: type) type {
             prev: ?*Node,
         };
 
-        gpa: std.mem.Allocator,
+        allocator: std.mem.Allocator,
         length: usize,
         head: ?*Node,
 
-        fn init(gpa: std.mem.Allocator) This {
+        fn init(allocator: std.mem.Allocator) This {
             return This{
-                .gpa = gpa,
+                .allocator = allocator,
                 .length = 0,
                 .head = null,
             };
         }
 
         fn push(this: *This, item: T) !void {
-            var node = try this.gpa.create(Node);
+            var node = try this.allocator.create(Node);
             node.* = Node{ .value = item, .prev = null };
 
             this.length += 1;
@@ -36,7 +36,7 @@ pub fn Stack(comptime T: type) type {
 
         fn pop(this: *This) ?T {
             const head = this.head orelse return null;
-            defer this.gpa.destroy(head);
+            defer this.allocator.destroy(head);
             this.length = @max(0, this.length -% 1);
             this.head = head.prev;
             return head.value;
