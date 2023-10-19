@@ -31,8 +31,6 @@ pub fn Queue(comptime T: type) type {
             self.length -= 1;
 
             var head = self.head.?;
-            std.debug.print("head: {any}\n", .{head});
-            std.debug.print("self: {any}\n", .{self});
             self.head = self.head.?.next;
             head.next = null;
 
