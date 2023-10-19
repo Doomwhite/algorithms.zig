@@ -42,8 +42,8 @@ pub fn Stack(comptime T: type) type {
             return head.value;
         }
 
-        fn peek() ?T {
-            return null;
+        fn peek(this: *This) ?T {
+            return if (this.head) |head| head.value else null;
         }
     };
 }
@@ -56,6 +56,7 @@ test "Stack" {
     try stack.push(@as(u8, 40));
     try stack.push(@as(u8, 50));
     try std.testing.expectEqual(@as(usize, 5), stack.length);
+    try std.testing.expectEqual(stack.peek(), 50);
     try std.testing.expectEqual(stack.pop(), 50);
     try std.testing.expectEqual(stack.pop(), 40);
     try std.testing.expectEqual(stack.pop(), 30);
