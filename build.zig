@@ -52,54 +52,26 @@ pub fn build(b: *std.Build) void {
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
 
-    // Creates a step for unit testing. This only builds the test executable
-    // but does not run it.
-    const unit_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/main.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-
-    const bubble_sort_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/BubbleSort.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-
-    const linked_list_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/LinkedList.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-
-    const queue_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/Queue.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-
-    const two_crystal_problem_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/TwoCrystalProblem.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-
-    const stack_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/Stack.zig" },
-        .target = target,
-        .optimize = optimize,
-    });
-
-    var run_unit_tests = b.addRunArtifact(unit_tests);
-    run_unit_tests = b.addRunArtifact(bubble_sort_tests);
-    run_unit_tests = b.addRunArtifact(linked_list_tests);
-    run_unit_tests = b.addRunArtifact(queue_tests);
-    run_unit_tests = b.addRunArtifact(two_crystal_problem_tests);
-    run_unit_tests = b.addRunArtifact(stack_tests);
-
-    // Similar to creating the run step earlier, this exposes a `test` step to
-    // the `zig build --help` menu, providing a way for the user to request
-    // running the unit tests.
     const test_step = b.step("test", "Run unit tests");
-    test_step.dependOn(&run_unit_tests.step);
+    var testing_steps_file_names = [_][]const u8{
+        "src/main.zig",
+        "src/BubbleSort.zig",
+        "src/LinkedList.zig",
+        "src/Queue.zig",
+        "src/TwoCrystalProblem.zig",
+        "src/Stack.zig",
+    };
+
+    inline for (testing_steps_file_names) |testing_step_file_name| {
+        addTestStep(b, test_step, b.addTest(.{
+            .root_source_file = .{ .path = testing_step_file_name },
+            .target = target,
+            .optimize = optimize,
+        }));
+    }
+}
+
+fn addTestStep(b: *std.Build, test_step: *std.build.Step, compile: *std.build.Step.Compile) void {
+    var run_tests = b.addRunArtifact(compile);
+    test_step.dependOn(&run_tests.step);
 }

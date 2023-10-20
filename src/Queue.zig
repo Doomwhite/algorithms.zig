@@ -80,6 +80,5 @@ test "Queue" {
     _ = array_queue.deque();
     try std.testing.expectEqual(@as(usize, 0), array_queue.length);
     var array_value = array_queue.peek();
-    std.debug.print("array_value: {any}\n", .{array_value});
     try std.testing.expect(array_value != null);
 }
