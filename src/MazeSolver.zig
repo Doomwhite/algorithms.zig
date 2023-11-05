@@ -78,9 +78,9 @@ pub fn solve(alloc: std.mem.Allocator, maze: [][]const u8, wall: u8, curr: Point
 
     _ = try walk(maze, wall, curr, end, &seen, &path);
 
-    for (path.items) |path_item| {
-        std.debug.print("path_item: {any}\n", .{path_item});
-    }
+    // for (path.items) |path_item| {
+    //      std.debug.print("path_item: {any}\n", .{path_item});
+    // }
 
     return path.toOwnedSlice();
 }
