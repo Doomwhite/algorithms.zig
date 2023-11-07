@@ -53,7 +53,16 @@ pub fn build(b: *std.Build) void {
     run_step.dependOn(&run_cmd.step);
 
     const test_step = b.step("test", "Run unit tests");
-    var testing_steps_file_names = [_][]const u8{ "src/main.zig", "src/BubbleSort.zig", "src/LinkedList.zig", "src/Queue.zig", "src/TwoCrystalProblem.zig", "src/Stack.zig", "src/MazeSolver.zig", "src/QuickSort.zig" };
+    var testing_steps_file_names = [_][]const u8{
+        "src/main.zig",
+        "src/BubbleSort.zig",
+        "src/LinkedList.zig",
+        "src/Queue.zig",
+        "src/TwoCrystalProblem.zig",
+        "src/Stack.zig",
+        "src/MazeSolver.zig",
+        "src/QuickSort.zig",
+    };
 
     inline for (testing_steps_file_names) |testing_step_file_name| {
         addTestStep(b, test_step, b.addTest(.{

@@ -13,24 +13,19 @@ pub fn QuickSort(arr: []u16, lo: usize, hi: usize) void {
 pub fn partition(arr: []u16, lo: usize, hi: usize) usize {
     const pivot: u16 = arr[hi];
 
-    var idx: usize = undefined;
-    if (lo >= 1) {
-        idx = lo - 1;
-    } else {
-        idx = 0;
-    }
+    var idx: isize = @as(isize, @intCast(lo)) - 1;
     for (lo..hi) |i| {
         if (arr[i] <= pivot) {
             idx += 1;
-            std.mem.swap(u16, &arr[i], &arr[idx]);
+            std.mem.swap(u16, &arr[i], &arr[@intCast(idx)]);
         }
     }
 
     idx += 1;
-    arr[hi] = arr[idx];
-    arr[idx] = pivot;
+    arr[hi] = arr[@intCast(idx)];
+    arr[@intCast(idx)] = pivot;
 
-    return idx;
+    return @intCast(idx);
 }
 
 test "Quick sort" {
