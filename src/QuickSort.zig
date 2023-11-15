@@ -14,6 +14,9 @@ pub fn QuickSort(arr: []u16, lo: usize, hi: usize) void {
 pub fn partition(arr: []u16, lo: usize, hi: usize) usize {
     const pivot: u16 = arr[hi];
 
+    // Sorts the higher values than the pivot
+    // basically a bubbleSort that keeps the index of the last swapped value
+
     var index: isize = @as(isize, @intCast(lo)) - 1;
     for (lo..hi) |i| {
         if (arr[i] <= pivot) {
@@ -21,6 +24,8 @@ pub fn partition(arr: []u16, lo: usize, hi: usize) usize {
             std.mem.swap(u16, &arr[i], &arr[@intCast(index)]);
         }
     }
+
+    // Swaps the right item to the last swapped item with the pivot
 
     index += 1;
     arr[hi] = arr[@intCast(index)];
