@@ -62,6 +62,7 @@ pub fn build(b: *std.Build) void {
         "src/Stack.zig",
         "src/MazeSolver.zig",
         "src/QuickSort.zig",
+        "src/BinarySearch.zig",
     };
 
     inline for (testing_steps_file_names) |testing_step_file_name| {
