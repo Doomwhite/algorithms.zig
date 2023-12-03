@@ -51,6 +51,7 @@ pub fn build(b: *std.Build) void {
         "src/DoublyLinkedList.zig",
         "src/TreeTraversal.zig",
         "src/BreadthFirstSearch.zig",
+        "src/BinaryTreeComparison.zig",
     };
 
     inline for (testing_steps_file_names) |testing_step_file_name| {

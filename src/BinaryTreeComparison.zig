@@ -1,8 +1,14 @@
 const std = @import("std");
 const BinaryNode = @import("TreeTraversal.zig").BinaryNode;
-const compare = @import("BinaryTreeComparison.zig").compare;
 
-pub fn main() !void {
+pub fn compare(a: ?*BinaryNode(u8), b: ?*BinaryNode(u8)) bool {
+    if (a == null and b == null) return true;
+    if (a == null or b == null) return false;
+    if (a.?.value != b.?.value) return false;
+    return compare(a.?.left, b.?.left) and compare(a.?.right, b.?.right);
+}
+
+test "BinaryTreeComparison" {
     var first = BinaryNode(u8){
         .value = 11,
         .left = null,
