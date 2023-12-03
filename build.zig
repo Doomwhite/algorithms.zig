@@ -50,6 +50,7 @@ pub fn build(b: *std.Build) void {
         "src/BinarySearch.zig",
         "src/DoublyLinkedList.zig",
         "src/TreeTraversal.zig",
+        "src/BreadthFirstSearch.zig",
     };
 
     inline for (testing_steps_file_names) |testing_step_file_name| {
