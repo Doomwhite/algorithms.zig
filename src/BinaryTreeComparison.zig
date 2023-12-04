@@ -26,6 +26,7 @@ test "BinaryTreeComparison" {
     };
     try std.testing.expect(compare(&third, &third));
     try std.testing.expect(!compare(&third, &second));
+    try std.testing.expect(!compare(&third, &first));
     var fourth = BinaryNode(u8){
         .value = 11,
         .left = null,
@@ -42,4 +43,6 @@ test "BinaryTreeComparison" {
         .right = &fifth,
     };
     try std.testing.expect(compare(&third, &sixth));
+    try std.testing.expect(!compare(&sixth, &fourth));
+    try std.testing.expect(!compare(&sixth, &fifth));
 }

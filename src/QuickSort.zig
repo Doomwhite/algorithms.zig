@@ -1,7 +1,6 @@
 const std = @import("std");
 
 pub fn QuickSort(arr: []u16, lo: usize, hi: usize) void {
-    std.debug.print("arr: {any}\n", .{arr});
     if (lo >= hi) {
         return;
     }
